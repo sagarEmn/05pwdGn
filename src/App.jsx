@@ -22,40 +22,43 @@ function App() {
 
     setPassword(pass);
   }, [length, numberAllowed, charAllowed, setPassword]);
-  //memoizes function and returns the same function reference unless dpndcies change
-
-  //calling pwdGn() is a change, even though it's dependencies aren't changed, leading to re-rendering
 
   const copyPasswordToClipboard = useCallback(() => {
     passwordRef.current?.select();
-    window.navigator.clipboard.writeText(password)
-  }, [password] )
-
-  //[useEffect] executes callBack function after component has rendered, not during initial render, prevents pwdGn() calling immediately which causes state update, that triggers re-render
+    window.navigator.clipboard.writeText(password);
+  }, [password]);
 
   useEffect(() => {
     passwordGenerator();
   }, [length, numberAllowed, charAllowed]);
-  // runs pwdGn() once, doesn't run again unless dpndcies change
+
   return (
     <>
-      <div className="w-full max-w-fit mx-auto shadow-md rounded-lg px-3 py-3 my-20 text-orange-500 bg-gray-700">
+      <div className="w-full max-w-fit mx-auto shadow-md rounded-lg px-3 py-3 my-20 text-white bg-gray-700">
         <h1 className="text-white text-center py-0.5">Password generator</h1>
+
+        {/* password generator box */}
         <div className="flex shadow rounded-lg overflow-hidden mb-4">
+          {/* password generator input box */}
           <input
             ref={passwordRef}
             type="text"
             value={password}
-            className="outline-none w-full py-1 px-3"
+            className="outline-none w-full py-1 px-3 text-black font-bold"
             placeholder="eminem"
             readOnly
           />
-          <button 
-          onClick={copyPasswordToClipboard}
-          className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0">
+
+          {/* password copy button */}
+          <button
+            onClick={copyPasswordToClipboard}
+            className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0"
+          >
             Copy
           </button>
         </div>
+
+        {/* password key parameters */}
         <div className="flex text-sm gap-x-2">
           <div className="flex items-center gap-x-1">
             <input
